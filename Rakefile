@@ -85,16 +85,16 @@ namespace :test do
   # optionally takes a env to breake the tests up into 3 workers.
   Rake::TestTask.new(:'functional:windows') do |t, args|
     files = Dir.glob('test/functional/*_test.rb').sort
-    if ENV['WORKER_NUMBER']
-      count = (files.count / 3).abs+1
-      start = (ENV['WORKER_NUMBER'].to_i - 1) * count
-      files = files[start..start+count-1]
-    end
+    # if ENV['WORKER_NUMBER']
+    #   count = (files.count / 3).abs+1
+    #   start = (ENV['WORKER_NUMBER'].to_i - 1) * count
+    #   files = files[start..start+count-1]
+    # end
 
     t.libs << 'test'
-    t.test_files = files
-    t.warning = true
-    t.verbose = true
+    t.test_files = [ 'test/functional/logging_test.rb' ]
+    t.warning = false
+    t.verbose = false
     t.ruby_opts = ['--dev'] if defined?(JRUBY_VERSION)
   end
 

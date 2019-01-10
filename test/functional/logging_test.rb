@@ -41,6 +41,7 @@ describe 'Deprecation Facility Behavior' do
         let(:control_flag) { '' }
 
         it "should result in a warning, not a stacktrace or abort" do
+          run_result.diagnose!
           run_result.exit_status.must_equal 0
           json_result.count.must_equal 1
           json_result[0]['status'].must_equal 'passed'
@@ -66,6 +67,8 @@ describe 'Deprecation Facility Behavior' do
 
       it "should result in an exit with a special code" do
         # 3 is the FATAL_DEPRECATION value from Inspec::UI
+        run_result.diagnose!
+
         run_result.exit_status.must_equal 3
 
         # Exactly one error should be output
@@ -93,6 +96,8 @@ describe 'Deprecation Facility Behavior' do
 
       it "should result in an exit with a special code" do
         # 8 is a custom value
+        run_result.diagnose!
+
         run_result.exit_status.must_equal 8
 
         # Exactly one error should be output
@@ -118,6 +123,8 @@ describe 'Deprecation Facility Behavior' do
       let(:control_flag) { '--controls deprecate_warn_mode' }
 
       it "should result in a warning, not a stacktrace or abort" do
+        run_result.diagnose!
+
         run_result.exit_status.must_equal 0
         json_result.count.must_equal 3
         json_result[0]['status'].must_equal 'passed'
@@ -143,6 +150,8 @@ describe 'Deprecation Facility Behavior' do
       let(:control_flag) { '--controls deprecate_ignore_mode' }
 
       it "should appear to be a normal run, no warnings or stacktrace or abort" do
+        run_result.diagnose!
+
         run_result.exit_status.must_equal 0
         json_result.count.must_equal 3
         json_result[0]['status'].must_equal 'passed'
